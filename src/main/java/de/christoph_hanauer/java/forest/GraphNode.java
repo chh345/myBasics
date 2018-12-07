@@ -2,7 +2,7 @@ package de.christoph_hanauer.java.forest;
 
 import java.util.ArrayList;
 
-public class GraphNode extends Comparable<GraphNode> {
+public class GraphNode implements NodeInterface {
 
     String descriptor;
     ArrayList<BinaryEdge> routes = new ArrayList();
@@ -25,16 +25,28 @@ public class GraphNode extends Comparable<GraphNode> {
         addRoute(b);
     }
 
+    public ArrayList<GraphNode> leadsTo () {
+        ArrayList<GraphNode> leads = new ArrayList<>();
+        for (BinaryEdge b : routes) {
+            leads.add((GraphNode)b.destination);
+        }
+        return leads;
+    }
+
     public String getDescriptor() {
         return descriptor;
     }
 
-    public String toString() {
-        return descriptor;
+    @Override
+    public int compareTo(Object o) {
+        GraphNode g = (GraphNode) o;
+        return this.descriptor.compareTo(g.getDescriptor());
     }
 
-    @Override
-        public int compareTo(GraphNode o) {
-        return 0;
+    public String toString() {
+        StringBuffer str = new StringBuffer();
+        for (BinaryEdge b : routes)
+            str.append(b);
+        return str.toString();
     }
 }

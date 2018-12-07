@@ -1,6 +1,6 @@
 package de.christoph_hanauer.java.forest;
 
-public class BinaryEdge <T> implements Comparable<T implements NodeInterface> {
+public class BinaryEdge <T extends NodeInterface> implements Comparable<BinaryEdge<T>> {
 
     int value;
 
@@ -18,12 +18,20 @@ public class BinaryEdge <T> implements Comparable<T implements NodeInterface> {
     }
 
     String getDescriptor(T node) {
-        return node.
+        return "";
     }
 
     @Override
-    public int compareTo(T o) {
-        String descSource = source.getDescriptor();
+    public int compareTo(BinaryEdge<T> o) {
+        int d = source.compareTo(o.source);
+        if (d == 0)
+            d = destination.compareTo(o.destination);
+        return d;
+    }
 
+    public String toString() {
+        StringBuffer str = new StringBuffer();
+        str.append(source.getDescriptor() + " to " + destination.getDescriptor() + " in " + value + "\n");
+        return str.toString();
     }
 }
